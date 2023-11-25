@@ -1,8 +1,8 @@
 {
-  "name": "react-homework-template",
+  "name": "goit-car-rental",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://number-nine.github.io/goit-react-hw-07-phonebook-createAsyncThunk-builder-callback/",
+  "homepage": "https://number-nine.github.io/goit-car-rental/",
   "dependencies": {
     "@emotion/react": "^11.10.8",
     "@emotion/styled": "^11.10.8",

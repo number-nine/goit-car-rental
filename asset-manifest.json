@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/goit-car-rental/static/css/main.7cc4f45c.css",
+    "main.js": "/goit-car-rental/static/js/main.729839c5.js",
+    "index.html": "/goit-car-rental/index.html",
+    "main.7cc4f45c.css.map": "/goit-car-rental/static/css/main.7cc4f45c.css.map",
+    "main.729839c5.js.map": "/goit-car-rental/static/js/main.729839c5.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7cc4f45c.css",
+    "static/js/main.729839c5.js"
+  ]
+}

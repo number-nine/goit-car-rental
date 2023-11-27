@@ -28,8 +28,16 @@ export const vehiclesSlice = createSlice({
       state.isLoading = false;
       state = action.payload;
     })
-    .addMatcher(action => action.type.endsWith('pending'), pendingHandler)
-    .addMatcher(action => action.type.endsWith('rejected'), rejectedHandler);
+    .addMatcher(
+      action =>
+        action.type.startsWith('vehicles') && action.type.endsWith('pending'),
+      pendingHandler
+    )
+    .addMatcher(
+      action =>
+        action.type.startsWith('vehicles') && action.type.endsWith('rejected'),
+      rejectedHandler
+    );
   },
 });
 

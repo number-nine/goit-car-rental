@@ -12,7 +12,7 @@ import {
 } from 'redux-persist';
 
 import vehiclesReducer from './vehiclesSlice';
-import filterReducer from './filterSlice'
+import filterReducer from './filtersSlice'
 
 const rootReducer = combineReducers({
   vehicles: vehiclesReducer,

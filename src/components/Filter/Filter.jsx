@@ -1,13 +1,16 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import { useFormik, Formik } from 'formik';
-import Select, { AriaOnFocus } from 'react-select';
+import Select from 'react-select';
 
 import * as vehiclesAPI from 'redux/vehiclesOperations';
+import * as filtersAPI from 'redux/filtersOperations';
 
 import { selectFilter } from 'redux/selectors';
 
 import { FormStyled, LabelStyled, FieldStyled, Error } from './Filter.styled';
 import { Button } from 'components/common.styled';
+
 
 // const validate = values => {
 //   const errors = {};
@@ -25,9 +28,31 @@ import { Button } from 'components/common.styled';
 //   return errors;
 // };
 
+// const MIN_PRICE = 11;
+// const MAX_PRICE = 60;
+
+// const createEnumOptions = (min, max, step) => {
+//   const options = [];
+//   const lowest = Math.trunc(min / step) * step;
+//   const bigest = Math.ceil(max / step) * step;
+
+//   for (let i = lowest; i <= bigest; i = i + step) {
+//     options.push(i);
+//   }
+//   return options;
+// };
+
+// console.log(createEnumOptions(MIN_PRICE, MAX_PRICE, 10));
+
 const Filter = () => {
   const dispatch = useDispatch();
   const filter = useSelector(selectFilter);
+  // const [prices, setPrices] = useState([])
+
+   useEffect(() => {
+     dispatch(filtersAPI.getPrices());
+     dispatch(filtersAPI.getMakes());
+   }, [dispatch]);
 
   const brands = [
     { value: 'all', label: 'All brands' },
@@ -37,10 +62,21 @@ const Filter = () => {
     })),
   ];
 
+  // console.log(prices);
+  const prices = [
+    { value: 'all', label: 'All prices' },
+    ...filter.prices.map(element => ({
+      value: element,
+      label: element,
+    })),
+  ];
+
+  // console.log(prices);
+
   const formik = useFormik({
     initialValues: {
       brand: 'all',
-      price: 30,
+      price: 'all',
       mileageFrom: 0,
       mileageTo: 0,
     },
@@ -48,7 +84,7 @@ const Filter = () => {
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: (values, { resetForm }) => {
-      console.log(formik);
+      console.log(values);
       // dispatch(vehiclesAPI.getAll());
       resetForm();
     },
@@ -59,7 +95,7 @@ const Filter = () => {
       <LabelStyled>
         Car brand
         <Select
-          name="band"
+          name="brand"
           defaultValue={brands.find(brand => brand.value === 'all')}
           options={brands}
           // hideSelectedOptions={formik.values.brand === 'all'}
@@ -78,19 +114,22 @@ const Filter = () => {
 
       <LabelStyled>
         Price/ 1 hour
-        <FieldStyled
-          as="select"
+        <Select
           name="price"
-          onChange={formik.handleChange}
-          // value={formik.values.price}
-        >
-          <option value="red">Red</option>
-          <option value="green">Green</option>
-          <option value="blue">Blue</option>
-        </FieldStyled>
+          defaultValue={prices.find(price => price.value === 'all')}
+          options={prices}
+          // hideSelectedOptions={formik.values.price === 'all'}
+          onChange={selectedOption => {
+            formik.setFieldValue('price', selectedOption.value);
+          }}
+          value={prices.find(price => price.value === formik.values.price)}
+          formatOptionLabel={({ value, label }, { context }) =>
+            context === 'value' && value !== 'all' ? `To ${label}$` : label 
+          }
+        />
       </LabelStyled>
 
-      <LabelStyled>
+      {/* <LabelStyled>
         Сar mileage / km
         <FieldStyled
           type="select"
@@ -104,7 +143,7 @@ const Filter = () => {
           onChange={formik.handleChange}
           value={formik.values.price}
         ></FieldStyled>
-      </LabelStyled>
+      </LabelStyled> */}
 
       <Button type="submit">Search</Button>
     </FormStyled>

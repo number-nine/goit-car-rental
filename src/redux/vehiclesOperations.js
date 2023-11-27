@@ -14,8 +14,7 @@ export const getAll = createAsyncThunk(
   'vehicles/getAll',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get('/advertss', requestConfig);
-      console.log(response.data);
+      const response = await axios.get('/adverts', requestConfig);
         return response.data;
     } catch (error) {
         return thunkAPI.rejectWithValue(error.message);

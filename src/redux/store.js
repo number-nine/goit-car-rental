@@ -11,16 +11,12 @@ import {
   REGISTER
 } from 'redux-persist';
 
-// import contactsReducer from './contactsSlice';
-// import filterReducer from './filterSlice';
-// import authReducer from './authSlice';
 import vehiclesReducer from './vehiclesSlice';
+import filterReducer from './filterSlice'
 
 const rootReducer = combineReducers({
-  // contacts: contactsReducer,
-  // filter: filterReducer,
-  // auth: authReducer,
   vehicles: vehiclesReducer,
+  filter: filterReducer,
 });
 
 const persistConfig = {

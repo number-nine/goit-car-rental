@@ -1,47 +1,60 @@
-import { useDispatch } from 'react-redux';
-import { useFormik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFormik, Formik } from 'formik';
+import Select, { AriaOnFocus } from 'react-select';
 
 import * as vehiclesAPI from 'redux/vehiclesOperations';
 
-import {
-  FormStyled,
-  LabelStyled,
-  FieldStyled,
-  Error,
-} from './Filter.styled';
+import { selectFilter } from 'redux/selectors';
+
+import { FormStyled, LabelStyled, FieldStyled, Error } from './Filter.styled';
 import { Button } from 'components/common.styled';
 
-const validate = values => {
-  const errors = {};
-  if (!values.name) {
-    errors.name = 'Required';
-  } else if (
-    !/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/i.test(
-      values.name
-    )
-  ) {
-    errors.name =
-      "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan";
-  }
+// const validate = values => {
+//   const errors = {};
+//   if (!values.name) {
+//     errors.name = 'Required';
+//   } else if (
+//     !/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/i.test(
+//       values.name
+//     )
+//   ) {
+//     errors.name =
+//       "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan";
+//   }
 
-  return errors;
-};
+//   return errors;
+// };
 
 const Filter = () => {
   const dispatch = useDispatch();
+  const filter = useSelector(selectFilter);
+
+  const brands = [
+    { value: 'all', label: 'All brands' },
+    ...filter.makes.map(element => ({
+      value: element,
+      label: element,
+    })),
+  ];
+
+  // console.log(brands.find(brand => brand.value === 'all'));
+  // .unshift({ value: 'all', label: "All brands" });
+
+  // console.log(brands.unshift({ value: 'all', label: "All brands" }));
 
   const formik = useFormik({
     initialValues: {
-      brand: '',
+      brand: 'all',
       // price: 0,
       mileageFrom: 0,
       mileageTo: 0,
     },
-    validate,
+    // validate,
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: (values, { resetForm }) => {
-      dispatch(vehiclesAPI.getAll());
+      console.log(formik);
+      // dispatch(vehiclesAPI.getAll());
       resetForm();
     },
   });
@@ -50,11 +63,19 @@ const Filter = () => {
     <FormStyled onSubmit={formik.handleSubmit}>
       <LabelStyled>
         Car brand
-        <FieldStyled
-          type="text"
+        <Select
           name="band"
-          onChange={formik.handleChange}
-          value={formik.values.brand}
+          defaultValue={brands.find(brand => brand.value === 'all')}
+          options={brands}
+          // hideSelectedOptions={formik.values.brand === 'all'}
+          onChange={selectedOption => {
+            formik.setFieldValue('brand', selectedOption.value);
+          }}
+          value={brands.find(brand => brand.value === formik.values.brand)}
+         
+          formatOptionLabel={({ value, label }, { context }) =>
+            context === 'value' ? (value === 'all' ? 'Enter the text' : label) : label
+          }
         />
       </LabelStyled>
       {formik.touched.name && formik.errors.name ? (

@@ -5,7 +5,6 @@ const requestConfig = {
   params: {
     page: 1,
     limit: 20,
-    make: "Buick",
   },
 };
 
@@ -15,8 +14,8 @@ export const getAll = createAsyncThunk(
   'vehicles/getAll',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get('/adverts', requestConfig);
-      console.log(response);
+      const response = await axios.get('/advertss', requestConfig);
+      console.log(response.data);
         return response.data;
     } catch (error) {
         return thunkAPI.rejectWithValue(error.message);

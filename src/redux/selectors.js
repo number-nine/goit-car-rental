@@ -5,6 +5,7 @@ const selfSelector = state => state;
 // const selectContacts = state => state.contacts.items;
 
 export const selectIsLoading = state => state.vehicles.isLoading;
+export const selectFilter = state => state.filter;
 // export const selectError = state => state.contacts.error;
 // export const selectFilter = state => state.filter;
 

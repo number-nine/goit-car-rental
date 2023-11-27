@@ -20,7 +20,7 @@ export default function App() {
 
 
    useEffect(() => {
-     dispatch(vehiclesAPI.getAll());
+    //  dispatch(vehiclesAPI.getAll());
    }, [dispatch]);
 
   return (

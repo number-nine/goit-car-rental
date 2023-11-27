@@ -37,15 +37,10 @@ const Filter = () => {
     })),
   ];
 
-  // console.log(brands.find(brand => brand.value === 'all'));
-  // .unshift({ value: 'all', label: "All brands" });
-
-  // console.log(brands.unshift({ value: 'all', label: "All brands" }));
-
   const formik = useFormik({
     initialValues: {
       brand: 'all',
-      // price: 0,
+      price: 30,
       mileageFrom: 0,
       mileageTo: 0,
     },
@@ -72,9 +67,8 @@ const Filter = () => {
             formik.setFieldValue('brand', selectedOption.value);
           }}
           value={brands.find(brand => brand.value === formik.values.brand)}
-         
           formatOptionLabel={({ value, label }, { context }) =>
-            context === 'value' ? (value === 'all' ? 'Enter the text' : label) : label
+            context === 'value' && value === 'all' ? 'Enter the text' : label
           }
         />
       </LabelStyled>

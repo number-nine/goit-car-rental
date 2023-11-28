@@ -25,21 +25,21 @@ export const filterSlice = createSlice({
     price: 'all',
     mileageFrom: 0,
     mileageTo: null,
-    prices: [],
-    makes: []
+    isLoading: false,
+    optionsData: {
+      makes: [],
+      rentalPrice: {},
+      mileage:{}
+    },
   },
   // reducers: {
   //   update: (state, action) => (state = action.payload),
   // },
   extraReducers: builder => {
     builder
-      .addCase(filtersAPI.getPrices.fulfilled, (state, action) => {
+      .addCase(filtersAPI.getFilters.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.prices = action.payload;
-      })
-      .addCase(filtersAPI.getMakes.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.makes = action.payload;
+        state.optionsData = action.payload;
       })
       .addMatcher(
         action =>

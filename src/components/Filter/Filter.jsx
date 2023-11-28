@@ -1,84 +1,109 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { useFormik, Formik } from 'formik';
+import { useFormik } from 'formik';
 import Select from 'react-select';
+import { createEnumOptions } from '../../helpers';
 
-import * as vehiclesAPI from 'redux/vehiclesOperations';
+// import * as vehiclesAPI from 'redux/vehiclesOperations';
 import * as filtersAPI from 'redux/filtersOperations';
 
-import { selectFilter } from 'redux/selectors';
+import {
+  selectFilterDataMakes,
+  selectFilterDataRentalPrice,
+  selectFilterDataMileage,
+} from 'redux/selectors';
 
-import { FormStyled, LabelStyled, FieldStyled, Error } from './Filter.styled';
+import { FormStyled, LabelStyled, Error } from './Filter.styled';
 import { Button } from 'components/common.styled';
 
 
-// const validate = values => {
-//   const errors = {};
-//   if (!values.name) {
-//     errors.name = 'Required';
-//   } else if (
-//     !/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/i.test(
-//       values.name
-//     )
-//   ) {
-//     errors.name =
-//       "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan";
-//   }
-
-//   return errors;
-// };
-
-// const MIN_PRICE = 11;
-// const MAX_PRICE = 60;
-
-// const createEnumOptions = (min, max, step) => {
-//   const options = [];
-//   const lowest = Math.trunc(min / step) * step;
-//   const bigest = Math.ceil(max / step) * step;
-
-//   for (let i = lowest; i <= bigest; i = i + step) {
-//     options.push(i);
-//   }
-//   return options;
-// };
-
-// console.log(createEnumOptions(MIN_PRICE, MAX_PRICE, 10));
-
 const Filter = () => {
   const dispatch = useDispatch();
-  const filter = useSelector(selectFilter);
-  // const [prices, setPrices] = useState([])
+  const dataMakes = useSelector(selectFilterDataMakes);
+  const dataRentalPrice = useSelector(selectFilterDataRentalPrice);
+  const dataMileage = useSelector(selectFilterDataMileage);
 
-   useEffect(() => {
-     dispatch(filtersAPI.getPrices());
-     dispatch(filtersAPI.getMakes());
-   }, [dispatch]);
 
-  const brands = [
-    { value: 'all', label: 'All brands' },
-    ...filter.makes.map(element => ({
-      value: element,
-      label: element,
-    })),
-  ];
+  const [brandOptions, setBrandOptions] = useState([]);
+  const [priceOptions, setPriceOptions] = useState([]);
+  const [mileageMinOptions, setMileageMinOptions] = useState([]);
+  const [mileageMaxOptions, setMileageMaxOptions] = useState([]);
 
-  // console.log(prices);
-  const prices = [
-    { value: 'all', label: 'All prices' },
-    ...filter.prices.map(element => ({
-      value: element,
-      label: element,
-    })),
-  ];
+  useEffect(() => {
+    dispatch(filtersAPI.getFilters());
+  }, [dispatch]);
 
-  // console.log(prices);
+  useEffect(() => {
+    const brandOptions = [
+      { value: 'all', label: 'All brands' },
+      ...dataMakes.map(element => ({
+        value: element,
+        label: element,
+      })),
+    ];
+    setBrandOptions(brandOptions);
+  }, [dataMakes]);
+
+  useEffect(() => {
+    const priceOptions = [
+      { value: 'all', label: 'All prices' },
+      ...createEnumOptions(dataRentalPrice.min, dataRentalPrice.max, 10).map(
+        element => ({
+          value: element,
+          label: element,
+        })
+      ),
+    ];
+    setPriceOptions(priceOptions);
+  }, [dataRentalPrice]);
+
+  useEffect(() => {
+    const milageOptions = [
+      { value: 'all', label: 'any mileage' },
+      ...createEnumOptions(dataMileage.min, dataMileage.max, 500).map(
+        element => ({
+          value: element,
+          label: element,
+        })
+      ),
+    ];
+    setMileageMinOptions(milageOptions);
+    setMileageMaxOptions(milageOptions);
+  }, [dataMileage]);
+
+  function limitMaxMileage(value) {
+    const limitedOptions = [
+      { value: 'all', label: 'any mileage' },
+      ...createEnumOptions(dataMileage.min, dataMileage.max, 500)
+        .map(element => ({
+          value: element,
+          label: element,
+        }))
+        .filter(element => value ==="all" ? true : element.value <= value),
+    ];
+      setMileageMinOptions(limitedOptions);  
+  }
+
+   function limitMinMileage(value) {
+     const limitedOptions = [
+       { value: 'all', label: 'any mileage' },
+       ...createEnumOptions(dataMileage.min, dataMileage.max, 500)
+         .map(element => ({
+           value: element,
+           label: element,
+         }))
+         .filter(element => (value === 'all' ? true : element.value >= value)),
+     ];
+     setMileageMaxOptions(limitedOptions);
+   }
+  
 
   const formik = useFormik({
     initialValues: {
       brand: 'all',
       price: 'all',
-      mileageFrom: 0,
-      mileageTo: 0,
+      mileageFrom: 'all',
+      mileageTo: 'all',
     },
     // validate,
     validateOnChange: false,
@@ -90,19 +115,22 @@ const Filter = () => {
     },
   });
 
+
   return (
     <FormStyled onSubmit={formik.handleSubmit}>
       <LabelStyled>
         Car brand
         <Select
           name="brand"
-          defaultValue={brands.find(brand => brand.value === 'all')}
-          options={brands}
+          defaultValue={brandOptions.find(brand => brand.value === 'all')}
+          options={brandOptions}
           // hideSelectedOptions={formik.values.brand === 'all'}
           onChange={selectedOption => {
             formik.setFieldValue('brand', selectedOption.value);
           }}
-          value={brands.find(brand => brand.value === formik.values.brand)}
+          value={brandOptions.find(
+            brand => brand.value === formik.values.brand
+          )}
           formatOptionLabel={({ value, label }, { context }) =>
             context === 'value' && value === 'all' ? 'Enter the text' : label
           }
@@ -111,40 +139,74 @@ const Filter = () => {
       {formik.touched.name && formik.errors.name ? (
         <Error>{formik.errors.name}</Error>
       ) : null}
-
       <LabelStyled>
         Price/ 1 hour
         <Select
           name="price"
-          defaultValue={prices.find(price => price.value === 'all')}
-          options={prices}
+          defaultValue={priceOptions.find(price => price.value === 'all')}
+          options={priceOptions}
           // hideSelectedOptions={formik.values.price === 'all'}
           onChange={selectedOption => {
             formik.setFieldValue('price', selectedOption.value);
           }}
-          value={prices.find(price => price.value === formik.values.price)}
+          value={priceOptions.find(
+            price => price.value === formik.values.price
+          )}
           formatOptionLabel={({ value, label }, { context }) =>
-            context === 'value' && value !== 'all' ? `To ${label}$` : label 
+            context === 'value' && value !== 'all' ? `To ${label}$` : label
           }
         />
       </LabelStyled>
-
-      {/* <LabelStyled>
+      <LabelStyled>
         Сar mileage / km
-        <FieldStyled
-          type="select"
-          name="price"
-          onChange={formik.handleChange}
-          value={formik.values.price}
-        ></FieldStyled>
-        <FieldStyled
-          type="select"
-          name="price"
-          onChange={formik.handleChange}
-          value={formik.values.price}
-        ></FieldStyled>
-      </LabelStyled> */}
-
+        <Select
+          name="mileageFrom"
+          defaultValue={mileageMinOptions.find(
+            mileage => mileage.value === 'all'
+          )}
+          options={mileageMinOptions}
+          // hideSelectedOptions={formik.values.price === 'all'}
+          onChange={selectedOption => {
+            formik.setFieldValue('mileageFrom', selectedOption.value);
+            limitMinMileage(selectedOption.value);
+          }}
+          value={mileageMinOptions.find(
+            mileage => mileage.value === formik.values.mileageFrom
+          )}
+          formatOptionLabel={({ value, label }, { context }) =>
+            context === 'value'
+              ? `From ${label}`
+              : value === 'all'
+              ? label.charAt(0).toUpperCase() + label.slice(1)
+              : label
+          }
+        />
+      </LabelStyled>
+      <LabelStyled>
+        &nbsp;
+        <Select
+          name="mileageTo"
+          defaultValue={mileageMaxOptions.find(
+            mileage => mileage.value === 'all'
+          )}
+          options={mileageMaxOptions}
+          // hideSelectedOptions={formik.values.price === 'all'}
+          onChange={selectedOption => {
+            formik.setFieldValue('mileageTo', selectedOption.value);
+            limitMaxMileage(selectedOption.value);
+          }}
+          value={mileageMaxOptions.find(
+            mileage => mileage.value === formik.values.mileageTo
+          )}
+          formatOptionLabel={({ value, label }, { context }) =>
+            context === 'value'
+              ? `To ${label}`
+              : value === 'all'
+              ? label.charAt(0).toUpperCase() + label.slice(1)
+              : label
+          }
+        />
+      </LabelStyled>
       <Button type="submit">Search</Button>
     </FormStyled>
   );

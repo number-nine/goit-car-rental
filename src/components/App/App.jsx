@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import SharedLayout from 'components/SharedLayout';
 import Home from 'pages/Home';
 import Vehicles from 'pages/Vehicles';
-import * as vehiclesAPI from 'redux/vehiclesOperations';
+// import * as vehiclesAPI from 'redux/vehiclesOperations';
 import { selectIsLoading } from 'redux/selectors';
 import SplashScreen from 'components/SplashScreen';
 

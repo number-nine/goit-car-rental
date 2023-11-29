@@ -16,13 +16,11 @@ import {
 import { FormStyled, LabelStyled, Error } from './Filter.styled';
 import { Button } from 'components/common.styled';
 
-
 const Filter = () => {
   const dispatch = useDispatch();
   const dataMakes = useSelector(selectFilterDataMakes);
   const dataRentalPrice = useSelector(selectFilterDataRentalPrice);
   const dataMileage = useSelector(selectFilterDataMileage);
-
 
   const [brandOptions, setBrandOptions] = useState([]);
   const [priceOptions, setPriceOptions] = useState([]);
@@ -79,24 +77,23 @@ const Filter = () => {
           value: element,
           label: element,
         }))
-        .filter(element => value ==="all" ? true : element.value <= value),
+        .filter(element => (value === 'all' ? true : element.value <= value)),
     ];
-      setMileageMinOptions(limitedOptions);  
+    setMileageMinOptions(limitedOptions);
   }
 
-   function limitMinMileage(value) {
-     const limitedOptions = [
-       { value: 'all', label: 'any mileage' },
-       ...createEnumOptions(dataMileage.min, dataMileage.max, 500)
-         .map(element => ({
-           value: element,
-           label: element,
-         }))
-         .filter(element => (value === 'all' ? true : element.value >= value)),
-     ];
-     setMileageMaxOptions(limitedOptions);
-   }
-  
+  function limitMinMileage(value) {
+    const limitedOptions = [
+      { value: 'all', label: 'any mileage' },
+      ...createEnumOptions(dataMileage.min, dataMileage.max, 500)
+        .map(element => ({
+          value: element,
+          label: element,
+        }))
+        .filter(element => (value === 'all' ? true : element.value >= value)),
+    ];
+    setMileageMaxOptions(limitedOptions);
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -115,6 +112,65 @@ const Filter = () => {
     },
   });
 
+  const customStyles = {
+    control: styles => ({
+      ...styles,
+      borderRadius: '14px',
+      border: 'none',
+      padding: '6px 6px',
+
+      backgroundColor: '#F7F7FB',
+
+      fontSize: '18px',
+      fontWeight: '500',
+    }),
+    dropdownIndicator: styles => ({
+      ...styles,
+      color: '#121417',
+    }),
+    menuList: styles => ({
+      ...styles,
+      color: '#12141732',
+
+      fontSize: '16px',
+      fontWeight: '500',
+
+      marginRight: '8px',
+      '::-webkit-scrollbar': {
+        width: '8px',
+        height: '130px',
+      },
+      '::-webkit-scrollbar-track': {
+        background: 'transparent',
+        marginTop: '20px',
+        marginBottom: '20px',
+      },
+      '::-webkit-scrollbar-thumb': {
+        background: '#12141710',
+        borderRadius: '10px',
+      },
+      '::-webkit-scrollbar-thumb:hover': {
+        background: '#12141732',
+      },
+    }),
+    option: (styles, { isSelected }) => ({
+      ...styles,
+      color: isSelected ? '#121417' : '#12141732',
+      padding: '4px 18px',
+      background: isSelected ? 'none' : 'transparent',
+      fontWeight: isSelected ? '500' : '400',
+      '&:hover': {
+        background: '#0087FB14',
+      },
+    }),
+    menu: styles => ({
+      ...styles,
+      border: '1px solid #12141710',
+      boxShadow: 'none',
+      borderRadius: '14px',
+      overflow: 'hidden',
+    }),
+  };
 
   return (
     <FormStyled onSubmit={formik.handleSubmit}>
@@ -134,6 +190,10 @@ const Filter = () => {
           formatOptionLabel={({ value, label }, { context }) =>
             context === 'value' && value === 'all' ? 'Enter the text' : label
           }
+          components={{
+            IndicatorSeparator: () => null,
+          }}
+          styles={customStyles}
         />
       </LabelStyled>
       {formik.touched.name && formik.errors.name ? (
@@ -155,6 +215,10 @@ const Filter = () => {
           formatOptionLabel={({ value, label }, { context }) =>
             context === 'value' && value !== 'all' ? `To ${label}$` : label
           }
+          components={{
+            IndicatorSeparator: () => null,
+          }}
+          styles={customStyles}
         />
       </LabelStyled>
       <LabelStyled>
@@ -173,13 +237,27 @@ const Filter = () => {
           value={mileageMinOptions.find(
             mileage => mileage.value === formik.values.mileageFrom
           )}
+          // formatOptionLabel={({ value, label }, { context }) =>
+          //   context === 'value'
+          //     ? `From ${label}`
+          //     : value === 'all'
+          //     ? label.charAt(0).toUpperCase() + label.slice(1)
+          //     : label
+          // }
           formatOptionLabel={({ value, label }, { context }) =>
             context === 'value'
-              ? `From ${label}`
+              ? value === 'all'
+                ? 'From'
+                : `From ${label}`
               : value === 'all'
               ? label.charAt(0).toUpperCase() + label.slice(1)
               : label
           }
+          components={{
+            DropdownIndicator: () => null,
+            IndicatorSeparator: () => null,
+          }}
+          styles={customStyles}
         />
       </LabelStyled>
       <LabelStyled>
@@ -200,11 +278,18 @@ const Filter = () => {
           )}
           formatOptionLabel={({ value, label }, { context }) =>
             context === 'value'
-              ? `To ${label}`
+              ? value === 'all'
+                ? 'To'
+                : `To ${label}`
               : value === 'all'
               ? label.charAt(0).toUpperCase() + label.slice(1)
               : label
           }
+          components={{
+            DropdownIndicator: () => null,
+            IndicatorSeparator: () => null,
+          }}
+          styles={customStyles}
         />
       </LabelStyled>
       <Button type="submit">Search</Button>

@@ -6,27 +6,31 @@ import {
   PhotoWrapperStyled,
   ThumbStyled,
   HeaderStyled,
+  SubHeaderStyled,
   DescriptionWrapperStyled,
   SpecificationItemsStyled,
   SpecificationStyled,
+  RequirementItemsStyled,
+  RequirementStyled,
   AnnotationStyled,
   AccessoriesWrapperStyled,
   ConditionsWrapperStyled,
 } from './FullCard.styled';
 
 import Button from 'components/Button';
-import FavoriteButton from 'components/FavoriteButton';
+import CloseButton from 'components/CloseButton';
 
 const items1 = ['Kiev', 'Ukraine', 'Economy Car Rentals'];
 const items2 = ['Suv', 'Tucson', '9598', 'Apple CarPlay'];
 
-function learnMore() {
-  console.log('Learn more');
+function rentalCar() {
+  console.log('Rental car');
 }
 
 export default function FullCard() {
   return (
     <WrapperStyled>
+      <CloseButton />
       <PhotoWrapperStyled>
         <PhotoStyled
           src={
@@ -62,9 +66,32 @@ export default function FullCard() {
             comfortable ride and luxurious features.
           </AnnotationStyled>
         </DescriptionWrapperStyled>
-        <AccessoriesWrapperStyled></AccessoriesWrapperStyled>
-        <ConditionsWrapperStyled></ConditionsWrapperStyled>
-        <Button title="Button" handleClick={learnMore} />
+        <AccessoriesWrapperStyled>
+          <SubHeaderStyled>Accessories and functionalities:</SubHeaderStyled>
+          <SpecificationStyled>
+            {items1.map(item => (
+              <SpecificationItemsStyled key={item}>
+                {item}
+              </SpecificationItemsStyled>
+            ))}
+          </SpecificationStyled>
+          <SpecificationStyled>
+            {items2.map(item => (
+              <SpecificationItemsStyled key={item}>
+                {item}
+              </SpecificationItemsStyled>
+            ))}
+          </SpecificationStyled>
+        </AccessoriesWrapperStyled>
+        <ConditionsWrapperStyled>
+          <SubHeaderStyled>Rental Conditions:</SubHeaderStyled>
+          <RequirementStyled>
+            {items2.map(item => (
+              <RequirementItemsStyled key={item}>{item}</RequirementItemsStyled>
+            ))}
+          </RequirementStyled>
+        </ConditionsWrapperStyled>
+        <Button title="Rental car" type="fit-content" handleClick={rentalCar} />
       </ThumbStyled>
     </WrapperStyled>
   );

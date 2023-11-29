@@ -10,11 +10,8 @@ export const WrapperStyled = styled.div`
 
   row-gap: 14px;
 
-  padding: 0;
-  padding-left: 40px;
-  padding-right: 40px;
+  padding: 40px 40px 40px 40px;
   margin: 0;
-  margin-bottom: 40px;
 
   border: 1px solid grey;
   border-radius: 24px;
@@ -40,8 +37,7 @@ PhotoStyled.defaultProps = {
 export const PhotoWrapperStyled = styled.div`
   position: relative;
   width: 100%;
-  margin-top: 40px;
-
+  
   border-radius: 14px;
 
   overflow: hidden;
@@ -96,6 +92,19 @@ export const HeaderStyled = styled.h2`
   font-weight: 500;
 `;
 
+export const SubHeaderStyled = styled.h3`
+  width: 100%;
+
+  padding: 0;
+  margin: 0;
+  margin-bottom: 4px;
+
+  color: #121417;
+
+  font-size: 14px;
+  font-weight: 500;
+`;
+
 export const SpecificationStyled = styled.ul`
   display: flex;
   justify-content: flex-start;
@@ -109,11 +118,25 @@ export const SpecificationStyled = styled.ul`
   font-size: 12px;
 `;
 
+export const RequirementStyled = styled.ul`
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+  column-gap: 8px;
+
+  padding: 0;
+  margin: 0;
+
+  color: #363535;
+  font-size: 12px;
+`;
+
 export const AnnotationStyled = styled.p`
-   color: #121417;
-   padding: 0;
-   margin: 0;
-   margin-top:10px;
+  color: #121417;
+  padding: 0;
+  margin: 0;
+  margin-top: 10px;
 
   font-size: 14px;
 `;
@@ -132,4 +155,16 @@ export const SpecificationItemsStyled = styled.li`
   &:not(:last-child) {
     padding-right: 6px;
   }
+`;
+
+export const RequirementItemsStyled = styled.li`
+  flex: 0 0 auto;
+  padding: 7px 14px 7px 14px;
+  margin: 0;
+
+  background-color: #f9f9f9;
+  border: none;
+  border-radius: 35px;
+
+  list-style: none;
 `;

@@ -9,8 +9,10 @@ export default function Dashboard() {
   return (
     <Container>
       <Filter />
-      {/* <SmallCard /> */}
+
       <FullCard />
+
+      <SmallCard />
     </Container>
   );
 }

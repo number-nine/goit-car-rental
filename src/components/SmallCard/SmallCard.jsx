@@ -32,7 +32,7 @@ export default function SmallCard() {
           alt="Tucson"
         />
       </PhotoWrapperStyled>
-      <FavoriteButton isactive={false?1:0} />
+      <FavoriteButton isactive={false ? 1 : 0} />
       <ThumbStyled>
         <DescriptionWrapperStyled>
           <HeaderStyled>
@@ -54,7 +54,11 @@ export default function SmallCard() {
             ))}
           </SpecificationStyled>
         </DescriptionWrapperStyled>
-        <Button title="Button" handleClick={learnMore} />
+        <Button
+          title="Learn more"
+          type="100%"
+          handleClick={learnMore}
+        />
       </ThumbStyled>
     </WrapperStyled>
   );

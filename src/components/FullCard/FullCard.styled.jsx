@@ -6,14 +6,18 @@ export const WrapperStyled = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 274px;
+  width: 541px;
 
   row-gap: 14px;
 
   padding: 0;
+  padding-left: 40px;
+  padding-right: 40px;
   margin: 0;
+  margin-bottom: 40px;
 
-  border: none;
+  border: 1px solid grey;
+  border-radius: 24px;
 
   overflow: hidden;
 `;
@@ -21,7 +25,7 @@ export const WrapperStyled = styled.div`
 export const PhotoStyled = styled.img`
   display: block;
   width: 100%;
-  height: 268px;
+  height: 248px;
 
   padding: 0;
   margin: 0;
@@ -36,21 +40,11 @@ PhotoStyled.defaultProps = {
 export const PhotoWrapperStyled = styled.div`
   position: relative;
   width: 100%;
+  margin-top: 40px;
 
   border-radius: 14px;
 
   overflow: hidden;
-
-  &::after {
-    content: '';
-    position: absolute;
-    display: block;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, #12141732 0%, #12141700 30%);
-  }
 `;
 
 export const ThumbStyled = styled.div`
@@ -71,6 +65,22 @@ export const DescriptionWrapperStyled = styled.div`
   justify-content: center;
   width: 100%;
   row-gap: 4px;
+`;
+
+export const AccessoriesWrapperStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  row-gap: 4px;
+`;
+
+export const ConditionsWrapperStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  row-gap: 8px;
 `;
 
 export const HeaderStyled = styled.h2`
@@ -97,7 +107,15 @@ export const SpecificationStyled = styled.ul`
   color: #12141750;
 
   font-size: 12px;
-  font-weight: 400;
+`;
+
+export const AnnotationStyled = styled.p`
+   color: #121417;
+   padding: 0;
+   margin: 0;
+   margin-top:10px;
+
+  font-size: 14px;
 `;
 
 export const SpecificationItemsStyled = styled.li`

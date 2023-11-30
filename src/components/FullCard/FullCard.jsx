@@ -91,7 +91,7 @@ export default function FullCard() {
             ))}
           </RequirementStyled>
         </ConditionsWrapperStyled>
-        <Button title="Rental car" type="fit-content" handleClick={rentalCar} />
+        <Button title="Rental car" size="fit-content" handleClick={rentalCar} />
       </ThumbStyled>
     </WrapperStyled>
   );

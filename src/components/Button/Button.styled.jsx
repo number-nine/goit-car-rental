@@ -9,7 +9,7 @@ export const ButtonStyled = styled.button`
   border: none;
   border-radius: 12px;
   outline: none;
-  width: ${props => (props.type)};
+  width: ${props => (props.size)};
   cursor: pointer;
 
   font-size: 14px;

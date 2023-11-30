@@ -3,25 +3,25 @@ import { NavLink } from 'react-router-dom';
 
 export const HeaderStyled = styled.header`
   display: flex;
-  justify-content: space-between;
-  margin: 0.5rem auto 0 auto;
-  width: 640px;
-  border-bottom: 1px solid #008cba;
+  padding: 8px 0;
+  background-color: #121417;
 `;
 
 export const NavStyled = styled.nav`
   display: flex;
   justify-content: flex-start;
+  width: 1184px;
+  margin: 0 auto;
 `;
 
 export const NavLinkStyled = styled(NavLink)`
-  padding: 0.5rem;
-  font-size: 1.5rem;
-  color: #008cba;
+  padding: 4px 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
   text-decoration: none;
 
   &:hover {
-    color: #095872;
     text-decoration: revert;
   }
 

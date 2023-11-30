@@ -5,9 +5,14 @@ const selfSelector = state => state;
 // const selectContacts = state => state.contacts.items;
 
 export const selectIsLoading = state => state.vehicles.isLoading;
+export const selectVehicles = state => state.vehicles.data;
+
+
 export const selectFilterDataMakes = state => state.filter.optionsData.makes;
 export const selectFilterDataRentalPrice = state => state.filter.optionsData.rentalPrice;
 export const selectFilterDataMileage = state => state.filter.optionsData.mileage;
+
+
 
 // export const selectError = state => state.contacts.error;
 // export const selectFilter = state => state.filter;

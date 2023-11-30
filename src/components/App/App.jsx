@@ -19,16 +19,14 @@ export default function App() {
   // const error = useSelector(selectError);
 
 
-   useEffect(() => {
-    //  dispatch(vehiclesAPI.getAll());
-   }, [dispatch]);
+  
 
   return (
     <>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />
-          <Route path="vehicles" element={<Vehicles />} />
+          <Route path="catalog" element={<Vehicles />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace={true} />} />
       </Routes>

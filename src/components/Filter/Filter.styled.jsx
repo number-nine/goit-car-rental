@@ -2,27 +2,25 @@ import styled from '@emotion/styled';
 
 export const FormStyled = styled.form`
   display: flex;
-  /* flex-direction: column; */
-  row-gap: 8px;
-  width: 100%;
+  align-self: center;
+  align-items: end;
+  column-gap: 8px;
+  width: 859px;
 `;
 
 export const LabelStyled = styled.label`
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 100%;
+  color: #8A8A89;
   font-size: 14px;
 `;
 
-export const LabelStyledChk = styled.label`
+export const MileageWrapper = styled.div`
   display: flex;
-  column-gap: 8px;
-  font-size: 14px;
-`;
+  align-items: end;
+  min-width: 320px;
 
-export const FieldStyled = styled.input`
-  height: 36px;
-  font-size: 24px;
 `;
 
 export const Error = styled.div`

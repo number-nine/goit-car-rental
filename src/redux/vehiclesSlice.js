@@ -4,9 +4,10 @@ import  * as vehiclesAPI from './vehiclesOperations';
 
 const initialState = {
   isLoading: false,
-  items:[],
+  data: [],
   error: null,
-  total:0,
+  total: 0,
+  page: 1,
 };
 
 const pendingHandler = state => {
@@ -24,9 +25,12 @@ export const vehiclesSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
   builder
-    .addCase(vehiclesAPI.getAll.fulfilled, (state, action) => {
+    .addCase(vehiclesAPI.getFiltered.fulfilled, (state, action) => {
       state.isLoading = false;
-      state = action.payload;
+      const { total, page } = action.payload.metadata[0];
+      state.data = action.payload.data;
+      state.total = total;
+      state.page = page;
     })
     .addMatcher(
       action =>

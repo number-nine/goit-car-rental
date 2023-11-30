@@ -4,12 +4,8 @@ export const Container = styled.main`
   display: flex;
   flex-direction: column;
   row-gap: 40px;
-  justify-content: center;
-  width: 1184px;
-
-  padding: 20px;
+  align-items: center;
+  max-width: 1184px;
   margin: 10px auto;
 
-  border: 1px solid #008cba;
-  border-radius: 8px;
 `;

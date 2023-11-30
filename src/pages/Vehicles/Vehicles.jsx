@@ -1,18 +1,30 @@
-import Filter from 'components/Filter';
-import SmallCard from 'components/SmallCard'
-import FullCard from 'components/FullCard'
-// import Section from 'components/Section';
+import { useSelector } from 'react-redux';
 
+import Filter from 'components/Filter';
+import SmallCard from 'components/SmallCard';
+import FullCard from 'components/FullCard';
+import Section from 'components/Section';
+import CardsGrid from 'components/CardsGrid';
 import { Container } from 'pages/Pages.styled';
 
-export default function Dashboard() {
+export default function Vehicles() {
   return (
     <Container>
-      <Filter />
-
-      <FullCard />
-
-      <SmallCard />
+      <Section>
+        <Filter />
+      </Section>
+      <Section>
+        <CardsGrid>
+         
+          {/* <SmallCard />
+          <SmallCard />
+          <SmallCard />
+          <SmallCard />
+          <SmallCard />
+          <SmallCard /> */}
+        </CardsGrid>
+      </Section>
+      {/* <FullCard /> */}
     </Container>
   );
 }

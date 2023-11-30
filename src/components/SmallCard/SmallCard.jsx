@@ -1,4 +1,5 @@
 import React from 'react';
+import { nanoid } from 'nanoid';
 
 import {
   WrapperStyled,
@@ -14,14 +15,27 @@ import {
 import Button from 'components/Button';
 import FavoriteButton from 'components/FavoriteButton';
 
-const items1 = ['Zaporizhzhia', 'Ukraine', 'Economy Car Rentals'];
-const items2 = ['Suv', 'Tucson', '9598', 'Apple CarPlay'];
-
 function learnMore() {
   console.log('Learn more');
 }
 
-export default function SmallCard() {
+function getRandomArrayItem(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
+export default function SmallCard({ vehicle }) {
+
+  const locations = vehicle.address?.split(',').map(el => el.trim());
+  locations.splice(0, 1);
+  locations.push(vehicle.rentalCompany);
+ 
+  const features = [
+    vehicle.type,
+    vehicle.make,
+    vehicle.mileage,
+    getRandomArrayItem(vehicle.accessories),
+  ];
+  
   return (
     <WrapperStyled>
       <PhotoWrapperStyled>
@@ -36,29 +50,27 @@ export default function SmallCard() {
       <ThumbStyled>
         <DescriptionWrapperStyled>
           <HeaderStyled>
-            <span>MINI, 2006</span>
-            <span>$30</span>
+            <span>
+              {vehicle.type}, {vehicle.year}
+            </span>
+            <span>${vehicle.rentalPrice}</span>
           </HeaderStyled>
           <SpecificationStyled>
-            {items1.map(item => (
+            {locations.map(item => (
               <SpecificationItemsStyled key={item}>
                 {item}
               </SpecificationItemsStyled>
             ))}
           </SpecificationStyled>
           <SpecificationStyled>
-            {items2.map(item => (
+            {features.map(item => (
               <SpecificationItemsStyled key={item}>
                 {item}
               </SpecificationItemsStyled>
             ))}
           </SpecificationStyled>
         </DescriptionWrapperStyled>
-        <Button
-          title="Learn more"
-          type="100%"
-          handleClick={learnMore}
-        />
+        <Button title="Learn more" size="100%" handleClick={learnMore} />
       </ThumbStyled>
     </WrapperStyled>
   );

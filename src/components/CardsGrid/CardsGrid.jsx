@@ -12,6 +12,7 @@ import { FlexGrid } from './CardsGrid.styled';
 const CardsGrid = () => {
   const dispatch = useDispatch();
   const vehicles = useSelector(selectVehicles);
+  // console.log(vehicles);
 
 
   useEffect(() => {

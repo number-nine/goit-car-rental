@@ -15,8 +15,8 @@ import {
 import Button from 'components/Button';
 import FavoriteButton from 'components/FavoriteButton';
 
-function learnMore() {
-  console.log('Learn more');
+function learnMore(id) {
+  console.log('Learn more: ', id);
 }
 
 function getRandomArrayItem(array) {
@@ -46,12 +46,12 @@ export default function SmallCard({ vehicle }) {
           alt="Tucson"
         />
       </PhotoWrapperStyled>
-      <FavoriteButton isactive={false ? 1 : 0} />
+      <FavoriteButton isactive={vehicle.isFavorite ? 1 : 0} />
       <ThumbStyled>
         <DescriptionWrapperStyled>
           <HeaderStyled>
             <span>
-              {vehicle.type}, {vehicle.year}
+              {vehicle.make}, {vehicle.year}
             </span>
             <span>${vehicle.rentalPrice}</span>
           </HeaderStyled>
@@ -70,7 +70,7 @@ export default function SmallCard({ vehicle }) {
             ))}
           </SpecificationStyled>
         </DescriptionWrapperStyled>
-        <Button title="Learn more" size="100%" handleClick={learnMore} />
+        <Button title="Learn more" size="100%" handleClick={()=>{learnMore(vehicle._id);}} />
       </ThumbStyled>
     </WrapperStyled>
   );

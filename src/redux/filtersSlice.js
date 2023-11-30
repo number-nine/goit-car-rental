@@ -21,10 +21,10 @@ const rejectedHandler = (state, action) => {
 export const filterSlice = createSlice({
   name: 'filters',
   initialState: {
-    make: 'all',
+    brand: 'all',
     price: 'all',
-    mileageFrom: 0,
-    mileageTo: null,
+    mileageFrom: 'all',
+    mileageTo: 'all',
     isLoading: false,
     optionsData: {
       makes: [],
@@ -32,10 +32,11 @@ export const filterSlice = createSlice({
       mileage:{}
     },
   },
-  // reducers: {
-  //   update: (state, action) => (state = action.payload),
-  // },
+  reducers: {
+    update: (state, action) => {console.log(action);},
+  },
   extraReducers: builder => {
+    console.log('buider start');
     builder
       .addCase(filtersAPI.getFilters.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -43,12 +44,15 @@ export const filterSlice = createSlice({
       })
       .addMatcher(
         action =>
-          action.type.startsWith('filters') && action.type.endsWith('pending'),
+        { console.log("matcher: ",action);
+          action.type.startsWith('filters') && action.type.endsWith('pending')
+        },
         pendingHandler
       )
       .addMatcher(
         action =>
-          action.type.startsWith('filters') && action.type.endsWith('rejected'),
+          {console.log("matcher: ",action);
+          action.type.startsWith('filters') && action.type.endsWith('rejected')},
         rejectedHandler
       );
   },

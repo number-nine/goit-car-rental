@@ -10,7 +10,7 @@ axios.defaults.baseURL = 'http://localhost:3000/api';
 export const getFiltered = createAsyncThunk(
   'vehicles/getFiltered',
   async (
-    { brand: make, price: rentalPrice, mileageFrom, mileageTo, page },
+    { brand: make, price: rentalPrice, mileageFrom, mileageTo, page } = {},
     thunkAPI
   ) => {
     const requestConfig = {
@@ -23,6 +23,9 @@ export const getFiltered = createAsyncThunk(
       requestConfig.params.mileageFrom = mileageFrom;
     if (mileageTo && mileageTo !== 'all')
       requestConfig.params.mileageTo = mileageTo;
+    if (page)
+      requestConfig.params.page = page;
+
     try {
       const response = await axios.get('/adverts', requestConfig);
       console.log(response.data);

@@ -1,5 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
+import * as favoritesAPI from 'redux/favoritesOperations';
+import { toggleIsFavorite } from 'redux/vehiclesSlice';
 
 import * as vehiclesAPI from 'redux/vehiclesOperations';
 import { update } from 'redux/filtersSlice';
@@ -39,7 +41,15 @@ export default function Vehicles() {
      dispatch(
        vehiclesAPI.getFiltered({ ...values, page: Number(values.page) + 1 })
      );
-   };
+  };
+  
+    const onFavoriteClick = (isFavorite, id) => {
+      dispatch(toggleIsFavorite(id)); // TODO: refactor with asyncDispatch
+
+      isFavorite
+        ? dispatch(favoritesAPI.removeFavorite(id))
+        : dispatch(favoritesAPI.addFavorite(id));
+    };
 
   return (
     <Container>
@@ -48,7 +58,8 @@ export default function Vehicles() {
       </Section>
       <Section>
         <CardsGrid
-          onClick={() => onLoadMore(values)}
+          onLoadClick={() => onLoadMore(values)}
+          onFavoriteClick={onFavoriteClick}
           collection={vehicles}
           metadata={metadata}
         />

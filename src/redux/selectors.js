@@ -22,7 +22,7 @@ export const selectFilterValues = createSelector(
   }
 );
 
-export const selectFavoritesList = state => state.favorites.data;
+export const selectFavoritesList = state => state.favorites.data.map(({vehicle}) => vehicle);
 export const selectFavoritesMetadata = state => ({
   total: state.favorites.total,
   page: state.favorites.page,

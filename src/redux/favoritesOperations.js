@@ -12,7 +12,6 @@ export const addFavorite = createAsyncThunk(
   ) => {
     try {
       const response = await axios.post('/favorites', {id});
-      console.log(response.data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -25,7 +24,6 @@ export const removeFavorite = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await axios.delete(`/favorites/${id}`);
-      console.log(response.data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -36,9 +34,12 @@ export const removeFavorite = createAsyncThunk(
 export const getFavorites = createAsyncThunk(
   'favorites/getFavorites',
   async ({ page }, thunkAPI) => {
+    const requestConfig = {
+      params: {},
+    };
+    if (page) requestConfig.params.page = page;
     try {
-      const response = await axios.get(`/favorites`, { params: {page} });
-      console.log(response.data);
+      const response = await axios.get(`/favorites`, requestConfig);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

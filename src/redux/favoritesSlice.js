@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-
 import * as favoritesAPI from './favoritesOperations';
 
 
@@ -25,6 +24,14 @@ const rejectedHandler = (state, action) => {
 export const favoritesSlice = createSlice({
   name: 'favorites',
   initialState,
+  reducers: {
+    deleteFavorite: (state, action) => {
+      const target = state.data.findIndex(
+        ({ vehicle_id: id }) => id === action.payload
+      );
+      state.data.splice(target, 1);;
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(favoritesAPI.getFavorites.fulfilled, (state, action) => {
@@ -58,4 +65,5 @@ export const favoritesSlice = createSlice({
   },
 });
 
+export const {deleteFavorite} = favoritesSlice.actions
 export default favoritesSlice.reducer;

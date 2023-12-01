@@ -1,11 +1,4 @@
 import React from 'react';
-import { nanoid } from 'nanoid';
-
-import { useSelector, useDispatch } from 'react-redux';
-import * as favoritesAPI from 'redux/favoritesOperations';
-import { toggleIsFavorite } from 'redux/vehiclesSlice';
-
-
 
 import {
   WrapperStyled,
@@ -30,13 +23,12 @@ function getRandomArrayItem(array) {
 }
 
 
-export default function SmallCard({ vehicle }) {
-  const dispatch = useDispatch();
+export default function SmallCard({ vehicle, handleFavoriteClick }) {
 
   const locations = vehicle.address?.split(',').map(el => el.trim());
   locations.splice(0, 1);
   locations.push(vehicle.rentalCompany);
- 
+
   const features = [
     vehicle.type,
     vehicle.make,
@@ -44,14 +36,6 @@ export default function SmallCard({ vehicle }) {
     getRandomArrayItem(vehicle.accessories),
   ];
 
-  const onFavoriteClick = (isFavorite, id) => {
-    dispatch(toggleIsFavorite(id)); //antipattern -> TODO: refactor with asyncDispatch
-
-    isFavorite
-      ? dispatch(favoritesAPI.removeFavorite(id))
-      : dispatch(favoritesAPI.addFavorite(id));
-  };
-  
   return (
     <WrapperStyled>
       <PhotoWrapperStyled>
@@ -59,7 +43,7 @@ export default function SmallCard({ vehicle }) {
       </PhotoWrapperStyled>
       <FavoriteButton
         isactive={vehicle.isFavorite ? 1 : 0}
-        handleClick={() => onFavoriteClick(vehicle.isFavorite, vehicle._id)}
+        handleClick={() => handleFavoriteClick(vehicle.isFavorite, vehicle._id)}
       />
       <ThumbStyled>
         <DescriptionWrapperStyled>

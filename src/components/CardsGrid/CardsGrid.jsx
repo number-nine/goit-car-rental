@@ -1,12 +1,10 @@
-import PropTypes from 'prop-types';
 
 import SmallCard from 'components/SmallCard';
 import { FlexGrid } from './CardsGrid.styled';
 import TextButton from 'components/TextButton';
-import { useState } from 'react';
+
 
 const CardsGrid = ({ collection, metadata, onLoadClick, onFavoriteClick }) => {
-  const [isDetailsShown, setIsDetailsShown] = useState(false)
 
   return (
     <>
@@ -16,7 +14,6 @@ const CardsGrid = ({ collection, metadata, onLoadClick, onFavoriteClick }) => {
             key={vehicle._id}
             vehicle={vehicle}
             handleFavoriteClick={onFavoriteClick}
-            onLoadMoreClick={setIsDetailsShown}
           />
         ))}
       </FlexGrid>

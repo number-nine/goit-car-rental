@@ -1,24 +1,20 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-// import { Notify } from 'notiflix';
+import { useSelector } from 'react-redux';
+
 
 import SharedLayout from 'components/SharedLayout';
 import Home from 'pages/Home';
 import Vehicles from 'pages/Vehicles';
 import Favorites from 'pages/Favorites';
 
-// import * as vehiclesAPI from 'redux/vehiclesOperations';
 import { selectIsLoading } from 'redux/selectors';
 import SplashScreen from 'components/SplashScreen';
 
 
 
 export default function App() {
-  const dispatch = useDispatch();
 
   const isLoading = useSelector(selectIsLoading);
-  // const error = useSelector(selectError);
 
 
   

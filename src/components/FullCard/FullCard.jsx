@@ -1,4 +1,7 @@
 import React from 'react';
+import parse from 'html-react-parser';
+
+import { decimalSeparator } from 'helpers';
 
 import {
   WrapperStyled,
@@ -20,63 +23,86 @@ import {
 import Button from 'components/Button';
 import CloseButton from 'components/CloseButton';
 
-const items1 = ['Kiev', 'Ukraine', 'Economy Car Rentals'];
-const items2 = ['Suv', 'Tucson', '9598', 'Apple CarPlay'];
-
 function rentalCar() {
   console.log('Rental car');
 }
 
-export default function FullCard() {
+export default function FullCard({ vehicle, ...transitProps }) {
+  const location = vehicle.address?.split(',').map(el => el.trim());
+  location.splice(0, 1);
+  const generalInfo = [
+    ...location,
+    `Id: ${vehicle._id.substr(-4)}`,
+    `Year: ${vehicle.year}`,
+    `Type: ${vehicle.type}`,
+  ];
+
+  const techInfo = [
+    `Fuel Consumption: ${vehicle.fuelConsumption}`,
+    `Engine Size: ${vehicle.engineSize}`,
+  ];
+
+  let rentalConditions = vehicle.rentalConditions
+    ?.split('\n')
+    .map(el => el.trim());
+  const age = rentalConditions[0]
+    .split(':')
+    .map((el, idx) =>
+      idx === 0
+        ? el.trim()
+        : `<span className="blueSpanAccent">${el.trim()}</span>`
+    );
+  rentalConditions.splice(0, 1);
+
+  rentalConditions = [
+    `${age[0]}: ${age[1]}`,
+    ...rentalConditions,
+    `Mileage: <span className="blueSpanAccent">${decimalSeparator(
+      vehicle.mileage
+    )}</span>`,
+    `Price: <span className="blueSpanAccent">${vehicle.rentalPrice}$</span>`,
+  ];
   return (
     <WrapperStyled>
-      <CloseButton />
+      <CloseButton {...transitProps} />
       <PhotoWrapperStyled>
-        <PhotoStyled
-          src={
-            'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-          }
-          alt="Tucson"
-        />
+        <PhotoStyled src={vehicle.img} alt={vehicle.model} />
       </PhotoWrapperStyled>
-      {/* <FavoriteButton isactive={false?1:0} /> */}
       <ThumbStyled>
         <DescriptionWrapperStyled>
           <HeaderStyled>
             <span>
-              MINI <span style={{ color: '#3470FF' }}>Enclave</span>, 2008
+              {vehicle.make} <span className="blueSpanAccent">{vehicle.model}</span>
+              , {vehicle.year}
             </span>
           </HeaderStyled>
           <SpecificationStyled>
-            {items1.map(item => (
+            {generalInfo.map(item => (
               <SpecificationItemsStyled key={item}>
                 {item}
               </SpecificationItemsStyled>
             ))}
           </SpecificationStyled>
           <SpecificationStyled>
-            {items2.map(item => (
+            {techInfo.map(item => (
               <SpecificationItemsStyled key={item}>
                 {item}
               </SpecificationItemsStyled>
             ))}
           </SpecificationStyled>
-          <AnnotationStyled>
-            The Buick Enclave is a stylish and spacious SUV known for its
-            comfortable ride and luxurious features.
-          </AnnotationStyled>
+          <AnnotationStyled>{vehicle.description}</AnnotationStyled>
         </DescriptionWrapperStyled>
         <AccessoriesWrapperStyled>
           <SubHeaderStyled>Accessories and functionalities:</SubHeaderStyled>
           <SpecificationStyled>
-            {items1.map(item => (
+            {vehicle.accessories.map(item => (
               <SpecificationItemsStyled key={item}>
                 {item}
               </SpecificationItemsStyled>
             ))}
           </SpecificationStyled>
           <SpecificationStyled>
-            {items2.map(item => (
+            {vehicle.functionalities.map(item => (
               <SpecificationItemsStyled key={item}>
                 {item}
               </SpecificationItemsStyled>
@@ -86,8 +112,10 @@ export default function FullCard() {
         <ConditionsWrapperStyled>
           <SubHeaderStyled>Rental Conditions:</SubHeaderStyled>
           <RequirementStyled>
-            {items2.map(item => (
-              <RequirementItemsStyled key={item}>{item}</RequirementItemsStyled>
+            {rentalConditions.map(item => (
+              <RequirementItemsStyled key={item}>
+                {parse(item)}
+              </RequirementItemsStyled>
             ))}
           </RequirementStyled>
         </ConditionsWrapperStyled>

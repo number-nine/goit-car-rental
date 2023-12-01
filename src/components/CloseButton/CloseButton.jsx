@@ -3,14 +3,14 @@ import svgCross from 'images/x.svg';
 
 import { SVG } from './CloseButton.styled';
 
-export default function FavoriteButton(props) {
+export default function FavoriteButton({ visibilityHandler, ...transitProps }) {
   return (
     <SVG
       src={svgCross}
       onClick={() => {
-        console.log('wrapper onClick');
+        visibilityHandler(false);
       }}
-      {...props}
+      {...transitProps}
     />
   );
 }

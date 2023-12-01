@@ -13,7 +13,7 @@ export const WrapperStyled = styled.div`
   padding: 40px 40px 40px 40px;
   margin: 0;
 
-  border: 1px solid grey;
+  background-color: #ffffff;
   border-radius: 24px;
 
   overflow: hidden;
@@ -167,4 +167,8 @@ export const RequirementItemsStyled = styled.li`
   border-radius: 35px;
 
   list-style: none;
+`;
+
+export const BlueSpan = styled.span`
+  color: #3470FF;
 `;

@@ -2,7 +2,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import Select from 'react-select';
-import { createEnumOptions } from '../../helpers';
+import { decimalSeparator, createEnumOptions } from 'helpers';
+
 
 import * as filtersAPI from 'redux/filtersOperations';
 import * as vehiclesAPI from 'redux/vehiclesOperations';
@@ -118,7 +119,6 @@ const Filter = () => {
     container: styles => ({
       ...styles,
       marginTop: '8px',
-      // width:'max-content'
     }),
     control: (styles, { isFocused }) => ({
       ...styles,
@@ -281,70 +281,70 @@ const Filter = () => {
         />
       </LabelStyled>
       <MileageWrapper>
-      <LabelStyled>
-        Сar mileage / km
-        <Select
-          name="mileageFrom"
-          defaultValue={mileageMinOptions.find(
-            mileage => mileage.value === 'all'
-          )}
-          options={mileageMinOptions}
-          // hideSelectedOptions={formik.values.price === 'all'}
-          onChange={selectedOption => {
-            formik.setFieldValue('mileageFrom', selectedOption.value);
-            limitMinMileage(selectedOption.value);
-          }}
-          value={mileageMinOptions.find(
-            mileage => mileage.value === formik.values.mileageFrom
-          )}
-          formatOptionLabel={
-            ({ value, label }, { context }) =>
+        <LabelStyled>
+          Сar mileage / km
+          <Select
+            name="mileageFrom"
+            defaultValue={mileageMinOptions.find(
+              mileage => mileage.value === 'all'
+            )}
+            options={mileageMinOptions}
+            // hideSelectedOptions={formik.values.price === 'all'}
+            onChange={selectedOption => {
+              formik.setFieldValue('mileageFrom', selectedOption.value);
+              limitMinMileage(selectedOption.value);
+            }}
+            value={mileageMinOptions.find(
+              mileage => mileage.value === formik.values.mileageFrom
+            )}
+            formatOptionLabel={({ value, label }, { context }) =>
               context === 'value'
                 ? value === 'all'
                   ? 'From'
-                  : `From ${label}`
+                  : `From ${decimalSeparator(label)}`
                 : label
-          }
-          components={{
-            DropdownIndicator: () => null,
-            IndicatorSeparator: () => null,
-          }}
-          styles={{ ...commonSelectStyles, ...fromSelectStyles }}
-        />
-      </LabelStyled>
-      <LabelStyled>
-        &nbsp;
-        <Select
-          name="mileageTo"
-          defaultValue={mileageMaxOptions.find(
-            mileage => mileage.value === 'all'
-          )}
-          options={mileageMaxOptions}
-          // hideSelectedOptions={formik.values.price === 'all'}
-          onChange={selectedOption => {
-            formik.setFieldValue('mileageTo', selectedOption.value);
-            limitMaxMileage(selectedOption.value);
-          }}
-          value={mileageMaxOptions.find(
-            mileage => mileage.value === formik.values.mileageTo
-          )}
-          formatOptionLabel={
-            ({ value, label }, { context }) =>
+            }
+            components={{
+              DropdownIndicator: () => null,
+              IndicatorSeparator: () => null,
+            }}
+            styles={{ ...commonSelectStyles, ...fromSelectStyles }}
+          />
+        </LabelStyled>
+        <LabelStyled>
+          &nbsp;
+          <Select
+            name="mileageTo"
+            defaultValue={mileageMaxOptions.find(
+              mileage => mileage.value === 'all'
+            )}
+            options={mileageMaxOptions}
+            // hideSelectedOptions={formik.values.price === 'all'}
+            onChange={selectedOption => {
+              formik.setFieldValue('mileageTo', selectedOption.value);
+              limitMaxMileage(selectedOption.value);
+            }}
+            value={mileageMaxOptions.find(
+              mileage => mileage.value === formik.values.mileageTo
+            )}
+            formatOptionLabel={({ value, label }, { context }) =>
               context === 'value'
                 ? value === 'all'
                   ? 'To'
-                  : `To ${label}`
+                  : `To ${decimalSeparator(label)}`
                 : label
-          }
-          components={{
-            DropdownIndicator: () => null,
-            IndicatorSeparator: () => null,
-          }}
-          styles={{ ...commonSelectStyles, ...toSelectStyles }}
-        />
-      </LabelStyled>
+            }
+            components={{
+              DropdownIndicator: () => null,
+              IndicatorSeparator: () => null,
+            }}
+            styles={{ ...commonSelectStyles, ...toSelectStyles }}
+          />
+        </LabelStyled>
       </MileageWrapper>
-      <Button title="Search" size="content-fit" type="submit">Search</Button>
+      <Button title="Search" size="content-fit" type="submit">
+        Search
+      </Button>
     </FormStyled>
   );
 };

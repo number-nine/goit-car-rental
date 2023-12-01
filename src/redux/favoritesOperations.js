@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+// require('dotenv').config();
 
 
-axios.defaults.baseURL = 'http://localhost:3000/api';
+axios.defaults.baseURL = 'https://goit-car-rental.onrender.com/api';
 
 export const addFavorite = createAsyncThunk(
   'favorites/addFavorite',

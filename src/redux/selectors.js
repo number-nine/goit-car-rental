@@ -1,19 +1,20 @@
 import { createSelector } from '@reduxjs/toolkit';
 
 
-const selfSelector = state => state;
-// const selectContacts = state => state.contacts.items;
+// const selfSelector = state => state;
 
+export const selectVehicles = state => state.vehicles;
 export const selectIsLoading = state => state.vehicles.isLoading;
-export const selectVehicles = state => state.vehicles.data;
-export const selectVehiclesState = state => state.vehicles;
+export const selectVehiclesList = state => state.vehicles.data;
+export const selectVehiclesMetadata = state => ({total: state.vehicles.total, page:state.vehicles.page});
+
 
 export const selectFilter = state => state.filter;
 export const selectFilterDataMakes = state => state.filter.optionsData.makes;
 export const selectFilterDataRentalPrice = state => state.filter.optionsData.rentalPrice;
 export const selectFilterDataMileage = state => state.filter.optionsData.mileage;
 export const selectFilterValues = createSelector(
-  [selectFilter, selectVehiclesState],
+  [selectFilter, selectVehicles],
   (filterState, vehiclesState) => {
     const { brand, price, mileageFrom, mileageTo } = filterState;
     const page = vehiclesState.page;
@@ -21,23 +22,8 @@ export const selectFilterValues = createSelector(
   }
 );
 
-
-
-
-// export const selectError = state => state.contacts.error;
-// export const selectFilter = state => state.filter;
-
-// export const selectAuth = createSelector([selfSelector], state => {
-//   return state.auth;
-// });
-
-// export const selectVisibleContacts = createSelector(
-//   [selectFilter, selectAuth, selectContacts],
-//   (filter, { isLoggedIn }, items) => {
-//     return items.filter(
-//       contact =>
-//         contact.name.toLowerCase().includes(filter.trim().toLowerCase()) &&
-//         (!contact.isPrivate || isLoggedIn)
-//     );
-//   }
-// );
+export const selectFavoritesList = state => state.favorites.data;
+export const selectFavoritesMetadata = state => ({
+  total: state.favorites.total,
+  page: state.favorites.page,
+});

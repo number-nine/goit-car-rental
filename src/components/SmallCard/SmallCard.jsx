@@ -1,6 +1,12 @@
 import React from 'react';
 import { nanoid } from 'nanoid';
 
+import { useSelector, useDispatch } from 'react-redux';
+import * as favoritesAPI from 'redux/favoritesOperations';
+import { toggleIsFavorite } from 'redux/vehiclesSlice';
+
+
+
 import {
   WrapperStyled,
   PhotoStyled,
@@ -23,7 +29,9 @@ function getRandomArrayItem(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
+
 export default function SmallCard({ vehicle }) {
+  const dispatch = useDispatch();
 
   const locations = vehicle.address?.split(',').map(el => el.trim());
   locations.splice(0, 1);
@@ -35,18 +43,24 @@ export default function SmallCard({ vehicle }) {
     vehicle.mileage,
     getRandomArrayItem(vehicle.accessories),
   ];
+
+  const onFavoriteClick = (isFavorite, id) => {
+    dispatch(toggleIsFavorite(id)); //antipattern -> TODO: refactor with asyncDispatch
+
+    isFavorite
+      ? dispatch(favoritesAPI.removeFavorite(id))
+      : dispatch(favoritesAPI.addFavorite(id));
+  };
   
   return (
     <WrapperStyled>
       <PhotoWrapperStyled>
-        <PhotoStyled
-          src={
-            'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-          }
-          alt="Tucson"
-        />
+        <PhotoStyled src={vehicle.img} alt={vehicle.model} />
       </PhotoWrapperStyled>
-      <FavoriteButton isactive={vehicle.isFavorite ? 1 : 0} />
+      <FavoriteButton
+        isactive={vehicle.isFavorite ? 1 : 0}
+        handleClick={() => onFavoriteClick(vehicle.isFavorite, vehicle._id)}
+      />
       <ThumbStyled>
         <DescriptionWrapperStyled>
           <HeaderStyled>
@@ -70,7 +84,13 @@ export default function SmallCard({ vehicle }) {
             ))}
           </SpecificationStyled>
         </DescriptionWrapperStyled>
-        <Button title="Learn more" size="100%" handleClick={()=>{learnMore(vehicle._id);}} />
+        <Button
+          title="Learn more"
+          size="100%"
+          handleClick={() => {
+            learnMore(vehicle._id);
+          }}
+        />
       </ThumbStyled>
     </WrapperStyled>
   );

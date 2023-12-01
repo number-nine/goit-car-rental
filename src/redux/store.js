@@ -12,11 +12,13 @@ import {
 } from 'redux-persist';
 
 import vehiclesReducer from './vehiclesSlice';
-import filterReducer from './filtersSlice'
+import filterReducer from './filtersSlice';
+import favoritesReducer from './favoritesSlice';
 
 const rootReducer = combineReducers({
   vehicles: vehiclesReducer,
   filter: filterReducer,
+  favorites: favoritesReducer,
 });
 
 const persistConfig = {

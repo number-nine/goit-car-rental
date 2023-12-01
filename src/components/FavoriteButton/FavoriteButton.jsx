@@ -3,15 +3,6 @@ import svgHeart from 'images/heart.svg';
 
 import { SVG } from './FavoriteButton.styled';
 
-export default function FavoriteButton(props) {
-  return (
-    <SVG
-      src={svgHeart}
-      onClick={() => {
-        console.log('wrapper onClick');
-      }}
-      
-      {...props}
-    />
-  );
+export default function FavoriteButton({handleClick, ...transitProps}) {
+  return <SVG src={svgHeart} onClick={handleClick} {...transitProps} />;
 }

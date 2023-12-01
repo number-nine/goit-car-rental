@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import * as vehiclesAPI from './vehiclesOperations';
+import * as favoritesAPI from './favoritesOperations';
 
 
 const initialState = {
@@ -21,22 +21,13 @@ const rejectedHandler = (state, action) => {
   state.error = action.payload;
 };
 
-export const vehiclesSlice = createSlice({
-  name: 'vehicles',
-  initialState,
-  reducers: {
-    toggleIsFavorite: (state, action) => {
-      const target = state.data.findIndex(({ _id: id }) => id === action.payload)
-      state.data[target] = {
-        ...state.data[target],
-        isFavorite: !state.data[target].isFavorite,
-      };
 
-    },
-  },
+export const favoritesSlice = createSlice({
+  name: 'favorites',
+  initialState,
   extraReducers: builder => {
     builder
-      .addCase(vehiclesAPI.getFiltered.fulfilled, (state, action) => {
+      .addCase(favoritesAPI.getFavorites.fulfilled, (state, action) => {
         state.isLoading = false;
         const { total, page } = action.payload.metadata[0];
         state.data =
@@ -46,20 +37,25 @@ export const vehiclesSlice = createSlice({
         state.total = total;
         state.page = page;
       })
+      .addCase(favoritesAPI.addFavorite.fulfilled, (state, action) => {
+        state.isLoading = false;
+      })
+      .addCase(favoritesAPI.removeFavorite.fulfilled, (state, action) => {
+        state.isLoading = false;
+      })
       .addMatcher(
         action =>
-          action.type.startsWith('vehicles') && action.type.endsWith('pending'),
+          action.type.startsWith('favorites') &&
+          action.type.endsWith('pending'),
         pendingHandler
       )
       .addMatcher(
         action =>
-          action.type.startsWith('vehicles') &&
+          action.type.startsWith('favorites') &&
           action.type.endsWith('rejected'),
         rejectedHandler
       );
   },
 });
 
-export const { toggleIsFavorite } = vehiclesSlice.actions;
-
-export default vehiclesSlice.reducer;
+export default favoritesSlice.reducer;

@@ -1,40 +1,21 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-
-import * as vehiclesAPI from 'redux/vehiclesOperations';
-import { update } from 'redux/filtersSlice';
-
-import { selectVehicles } from 'redux/selectors';
 
 import SmallCard from 'components/SmallCard';
-
 import { FlexGrid } from './CardsGrid.styled';
+import TextButton from 'components/TextButton';
 
-const CardsGrid = () => {
-  const dispatch = useDispatch();
-  const vehicles = useSelector(selectVehicles);
-  // console.log(vehicles);
-
-
-  useEffect(() => {
-    dispatch(
-      update({
-        brand: 'all',
-        price: 'all',
-        mileageFrom: 'all',
-        mileageTo: 'all',
-      })
-    );
-    dispatch(vehiclesAPI.getFiltered());
-  }, [dispatch]);
-
+const CardsGrid = ({ collection, metadata, onClick }) => {
   return (
-    <FlexGrid>
-      {vehicles.map(vehicle => (
-        <SmallCard key={vehicle._id} vehicle={vehicle} />
-      ))}
-    </FlexGrid>
+    <>
+      <FlexGrid>
+        {collection.map(vehicle => (
+          <SmallCard key={vehicle._id} vehicle={vehicle} />
+        ))}
+      </FlexGrid>
+      {metadata.page * 12 < metadata.total && (
+        <TextButton title={'Load more'} handleClick={onClick} />
+      )}
+    </>
   );
 };
 

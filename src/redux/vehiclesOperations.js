@@ -1,10 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-const requestConfig = {
-  params: {},
-};
-
 axios.defaults.baseURL = 'http://localhost:3000/api';
 
 export const getFiltered = createAsyncThunk(
@@ -28,7 +24,6 @@ export const getFiltered = createAsyncThunk(
 
     try {
       const response = await axios.get('/adverts', requestConfig);
-      console.log(response.data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

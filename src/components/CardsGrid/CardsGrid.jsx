@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import * as vehiclesAPI from 'redux/vehiclesOperations';
+import { update } from 'redux/filtersSlice';
+
 import { selectVehicles } from 'redux/selectors';
 
 import SmallCard from 'components/SmallCard';
@@ -16,6 +18,14 @@ const CardsGrid = () => {
 
 
   useEffect(() => {
+    dispatch(
+      update({
+        brand: 'all',
+        price: 'all',
+        mileageFrom: 'all',
+        mileageTo: 'all',
+      })
+    );
     dispatch(vehiclesAPI.getFiltered());
   }, [dispatch]);
 

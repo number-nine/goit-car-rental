@@ -24,13 +24,10 @@ export const vehiclesSlice = createSlice({
   name: 'vehicles',
   initialState,
   extraReducers: builder => {
-        console.log('buider vehicle start');
-
     builder
       .addCase(vehiclesAPI.getFiltered.fulfilled, (state, action) => {
         state.isLoading = false;
         const { total, page } = action.payload.metadata[0];
-        console.log('page: ', page);
         state.data =
           page > 1
             ? [...state.data, ...action.payload.data]

@@ -33,26 +33,23 @@ export const filterSlice = createSlice({
     },
   },
   reducers: {
-    update: (state, action) => {console.log(action);},
+    update: (state, action) => ({...state, ...action.payload}),
   },
   extraReducers: builder => {
-    console.log('buider start');
     builder
       .addCase(filtersAPI.getFilters.fulfilled, (state, action) => {
         state.isLoading = false;
         state.optionsData = action.payload;
       })
       .addMatcher(
-        action =>
-        { console.log("matcher: ",action);
+        action =>  
           action.type.startsWith('filters') && action.type.endsWith('pending')
-        },
+        ,
         pendingHandler
       )
       .addMatcher(
         action =>
-          {console.log("matcher: ",action);
-          action.type.startsWith('filters') && action.type.endsWith('rejected')},
+          action.type.startsWith('filters') && action.type.endsWith('rejected'),
         rejectedHandler
       );
   },

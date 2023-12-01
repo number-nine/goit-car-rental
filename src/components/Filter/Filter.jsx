@@ -6,7 +6,7 @@ import { createEnumOptions } from '../../helpers';
 
 import * as filtersAPI from 'redux/filtersOperations';
 import * as vehiclesAPI from 'redux/vehiclesOperations';
-import update from 'redux/filtersSlice'
+import {update} from 'redux/filtersSlice'
 
 
 import {
@@ -108,6 +108,7 @@ const Filter = () => {
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: (values, { resetForm }) => {
+      dispatch(update(values));
       dispatch(vehiclesAPI.getFiltered(values));
       // resetForm();
     },
@@ -241,8 +242,6 @@ const Filter = () => {
           // hideSelectedOptions={formik.values.brand === 'all'}
           onChange={selectedOption => {
             formik.setFieldValue('brand', selectedOption.value);
-            console.log('DOING brand to redux');
-            // dispatch(update({type:'filters/update', payload:'hello'}));
           }}
           value={brandOptions.find(
             brand => brand.value === formik.values.brand
@@ -268,7 +267,6 @@ const Filter = () => {
           // hideSelectedOptions={formik.values.price === 'all'}
           onChange={selectedOption => {
             formik.setFieldValue('price', selectedOption.value);
-            console.log('TODO price to redux');
           }}
           value={priceOptions.find(
             price => price.value === formik.values.price
@@ -295,7 +293,6 @@ const Filter = () => {
           onChange={selectedOption => {
             formik.setFieldValue('mileageFrom', selectedOption.value);
             limitMinMileage(selectedOption.value);
-            console.log('TODO mileageFrom to redux');
           }}
           value={mileageMinOptions.find(
             mileage => mileage.value === formik.values.mileageFrom
@@ -327,7 +324,6 @@ const Filter = () => {
           onChange={selectedOption => {
             formik.setFieldValue('mileageTo', selectedOption.value);
             limitMaxMileage(selectedOption.value);
-            console.log('TODO mileageFrom to redux');
           }}
           value={mileageMaxOptions.find(
             mileage => mileage.value === formik.values.mileageTo

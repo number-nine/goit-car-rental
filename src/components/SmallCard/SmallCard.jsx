@@ -41,7 +41,16 @@ export default function SmallCard({ vehicle, handleFavoriteClick }) {
     <>
       <WrapperStyled>
         <PhotoWrapperStyled>
-          <PhotoStyled src={vehicle.img} alt={vehicle.model} />
+          <PhotoStyled
+            onError={({ currentTarget }) => {
+              currentTarget.onerror = null; // prevents looping
+              currentTarget.src = null;
+            }}
+            src={!vehicle.img ? null : vehicle.img}
+          //   className="card-img-top"
+          //   alt="..."
+          // />
+          alt={vehicle.model} />
         </PhotoWrapperStyled>
         <FavoriteButton
           isactive={vehicle.isFavorite ? 1 : 0}

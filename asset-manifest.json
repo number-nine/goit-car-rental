@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/goit-car-rental/static/css/main.8934d697.css",
-    "main.js": "/goit-car-rental/static/js/main.7ba8c437.js",
+    "main.js": "/goit-car-rental/static/js/main.11fbd991.js",
     "index.html": "/goit-car-rental/index.html",
     "static/media/heart.svg": "/goit-car-rental/static/media/heart.907806d324f947c367152eb907538aa8.svg",
     "static/media/x.svg": "/goit-car-rental/static/media/x.b613103c69a50b7f8211fb4dfa452361.svg",
     "main.8934d697.css.map": "/goit-car-rental/static/css/main.8934d697.css.map",
-    "main.7ba8c437.js.map": "/goit-car-rental/static/js/main.7ba8c437.js.map"
+    "main.11fbd991.js.map": "/goit-car-rental/static/js/main.11fbd991.js.map"
   },
   "entrypoints": [
     "static/css/main.8934d697.css",
-    "static/js/main.7ba8c437.js"
+    "static/js/main.11fbd991.js"
   ]
 }

@@ -23,6 +23,7 @@ The first opening may be long, because free render.com service is used for backe
 The Car Rental App provides a set of functions that allow single user to interact with the system through web UI (see [Usage](#usage)):
 
 - Get a catalogue of cars for rent
+- View detail of a rental car 
 - Search cars by different filter options
 - Mark or unmark car as favorite
 - View favorite cars

@@ -1,31 +1,21 @@
 import styled from '@emotion/styled';
 
-export const FormStyled = styled.form`
-  display: flex;
-  flex-direction: column;
-  row-gap: 8px;
-  width: 100%;
+export const Wrapper = styled.div`
+  margin-top: 80px;
+  width: 600px;
+
+  & p {
+    font-size: 18px;
+    margin-bottom: 40px;
+  }
+
+  & span {
+    font-weight: 600;
+  }
 `;
 
-export const LabelStyled = styled.label`
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  font-size: 14px;
+export const Header = styled.h1`
+  color: #3470ff;
+  font-size: 32px;
 `;
 
-export const LabelStyledChk = styled.label`
-  display: flex;
-  column-gap: 8px;
-  font-size: 14px;
-`;
-
-export const FieldStyled = styled.input`
-  height: 36px;
-  font-size: 24px;
-`;
-
-export const Error = styled.div`
-  font-size: 14px;
-  color: #f36258;
-`;

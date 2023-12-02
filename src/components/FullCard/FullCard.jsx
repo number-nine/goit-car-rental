@@ -2,6 +2,8 @@ import React from 'react';
 import parse from 'html-react-parser';
 
 import { decimalSeparator } from 'helpers';
+import carMockupImage from 'images/car-mokup.jpg';
+
 
 import {
   WrapperStyled,
@@ -28,6 +30,7 @@ function rentalCar() {
 }
 
 export default function FullCard({ vehicle, ...transitProps }) {
+
   const location = vehicle.address?.split(',').map(el => el.trim());
   location.splice(0, 1);
   const generalInfo = [
@@ -53,7 +56,6 @@ export default function FullCard({ vehicle, ...transitProps }) {
         : `<span className="blueSpanAccent">${el.trim()}</span>`
     );
   rentalConditions.splice(0, 1);
-
   rentalConditions = [
     `${age[0]}: ${age[1]}`,
     ...rentalConditions,
@@ -62,18 +64,28 @@ export default function FullCard({ vehicle, ...transitProps }) {
     )}</span>`,
     `Price: <span className="blueSpanAccent">${vehicle.rentalPrice}$</span>`,
   ];
+
+  const getPicture = () => vehicle.img || vehicle.photoLink;
+
   return (
     <WrapperStyled>
       <CloseButton {...transitProps} />
       <PhotoWrapperStyled>
-        <PhotoStyled src={vehicle.img} alt={vehicle.model} />
+        <PhotoStyled
+          onError={({ currentTarget }) => {
+            currentTarget.src = carMockupImage;
+          }}
+          src={!getPicture() ? carMockupImage : getPicture()}
+          alt={vehicle.model}
+        />
       </PhotoWrapperStyled>
       <ThumbStyled>
         <DescriptionWrapperStyled>
           <HeaderStyled>
             <span>
-              {vehicle.make} <span className="blueSpanAccent">{vehicle.model}</span>
-              , {vehicle.year}
+              {vehicle.make}{' '}
+              <span className="blueSpanAccent">{vehicle.model}</span>,{' '}
+              {vehicle.year}
             </span>
           </HeaderStyled>
           <SpecificationStyled>

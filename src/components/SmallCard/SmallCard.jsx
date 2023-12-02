@@ -1,5 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
+import carMockupImage from 'images/car-mokup.jpg';
+
 
 
 import {
@@ -23,7 +25,7 @@ function getRandomArrayItem(array) {
 
 
 export default function SmallCard({ vehicle, handleFavoriteClick }) {
-    const [isDetailsShown, setIsDetailsShown] = useState(false);
+  const [isDetailsShown, setIsDetailsShown] = useState(false);
 
 
   const locations = vehicle.address?.split(',').map(el => el.trim());
@@ -37,20 +39,19 @@ export default function SmallCard({ vehicle, handleFavoriteClick }) {
     getRandomArrayItem(vehicle.accessories),
   ];
 
+  const getPicture = () => vehicle.img || vehicle.photoLink;
+
   return (
     <>
       <WrapperStyled>
         <PhotoWrapperStyled>
           <PhotoStyled
             onError={({ currentTarget }) => {
-              currentTarget.onerror = null; // prevents looping
-              // currentTarget.src = null;
+              currentTarget.src = carMockupImage;
             }}
-            src={!vehicle.img ? null : vehicle.img}
-          //   className="card-img-top"
-          //   alt="..."
-          // />
-          alt={vehicle.model} />
+            src={!getPicture() ? carMockupImage : getPicture()}
+            alt={vehicle.model}
+          />
         </PhotoWrapperStyled>
         <FavoriteButton
           isactive={vehicle.isFavorite ? 1 : 0}

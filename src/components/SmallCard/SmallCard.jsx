@@ -44,7 +44,7 @@ export default function SmallCard({ vehicle, handleFavoriteClick }) {
           <PhotoStyled
             onError={({ currentTarget }) => {
               currentTarget.onerror = null; // prevents looping
-              currentTarget.src = null;
+              // currentTarget.src = null;
             }}
             src={!vehicle.img ? null : vehicle.img}
           //   className="card-img-top"

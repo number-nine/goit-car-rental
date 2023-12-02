@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 // require('dotenv').config();
 
 
-axios.defaults.baseURL = 'https://goit-car-rental.onrender.com/api';
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
 export const addFavorite = createAsyncThunk(
   'favorites/addFavorite',

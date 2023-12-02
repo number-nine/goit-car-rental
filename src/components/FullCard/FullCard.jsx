@@ -24,7 +24,7 @@ import Button from 'components/Button';
 import CloseButton from 'components/CloseButton';
 
 function rentalCar() {
-  console.log('Rental car');
+  window.location.href = 'tel:+380730000000';
 }
 
 export default function FullCard({ vehicle, ...transitProps }) {

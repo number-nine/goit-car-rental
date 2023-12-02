@@ -13,7 +13,7 @@ The first opening may be long, because free render.com service is used for backe
   - [Installation](#installation)
 
 
-## <a id="frontend">Frontend</a>
+## <a id="backend">Backend</a>
 
 - [GitHub](https://github.com/number-nine/goit-car-rental-backend)
 - [Documentation](https://goit-car-rental.onrender.com/api-docs/)

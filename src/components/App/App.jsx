@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Notify } from 'notiflix';
 
 
 import SharedLayout from 'components/SharedLayout';
@@ -7,7 +8,7 @@ import Home from 'pages/Home';
 import Vehicles from 'pages/Vehicles';
 import Favorites from 'pages/Favorites';
 
-import { selectIsLoading } from 'redux/selectors';
+import { selectIsLoading, selectError } from 'redux/selectors';
 import SplashScreen from 'components/SplashScreen';
 
 
@@ -15,6 +16,7 @@ import SplashScreen from 'components/SplashScreen';
 export default function App() {
 
   const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
 
 
   
@@ -30,7 +32,7 @@ export default function App() {
         <Route path="*" element={<Navigate to="/" replace={true} />} />
       </Routes>
       {isLoading && <SplashScreen />}
-      {/* {error && Notify.info(error)} */}
+      {error && Notify.info(error)}
     </>
   );
 }

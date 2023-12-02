@@ -26,6 +26,7 @@ export const filterSlice = createSlice({
     mileageFrom: 'all',
     mileageTo: 'all',
     isLoading: false,
+    error: null,
     optionsData: {
       makes: [],
       rentalPrice: {},

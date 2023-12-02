@@ -44,7 +44,7 @@ Before you can run the Power Pulse backend, you'll need to have the following so
    ```
 2. Change your current directory to the project folder:
    ```
-   cd goit-car-rental-backend
+   cd goit-car-rental
    ```
 3. Install the project dependencies:
    ```

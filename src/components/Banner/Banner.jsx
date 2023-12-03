@@ -11,7 +11,6 @@ const Banner = () => {
 
   function forwardToCatalog() {
     navigate('/catalog');
-    // window.location.href = './catalog';
   }
   return (
     <Wrapper>
